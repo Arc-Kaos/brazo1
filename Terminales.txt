@@ -1,0 +1,9 @@
+cd ~/jetcobot_ws
+source install/setup.bash
+ros2 bag record -o corrida_fifo /arm/queue_state /joint_states
+
+cd ~/jetcobot_ws
+source install/setup.bash
+python3 src/herramientas/generar_carga.py
+
+ros2 action send_goal /move_arm arm_broker_interfaces/action/MoveArm "{client_id: 'companero_1', priority: 5, joint_positions: [0.2, 0.3, -0.3, 0.0, 0.0, 0.0]}"
